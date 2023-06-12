@@ -1,7 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:tenor/tenor.dart';
 
 void main() {
   runApp(const MyApp());
+}
+const String apiKeyTenor = 'LIVDSRZULELA';
+Tenor tenor = Tenor(apiKey: apiKeyTenor);
+final List<String> _listOfCards = [];
+
+// Future autoSearch(String autoFind) async {
+//
+// // auto complete results
+//   List<String> autoCompleted = await tenor.autoComplete(autoFind, limit: 5);
+// }
+
+Future resFind(String find) async {
+  final FhotoResult fhotoResult;
+
+// search Gif
+  TenorResponse? res = await tenor.searchGIF(find, limit: 5);
+  res?.results.forEach((TenorResult tenorResult) {
+    var title = tenorResult.title;
+    var media = tenorResult.media;
+    print('$title: gif : ${media?.gif?.previewUrl?.toString()}');
+
+    _listOfCards.add('${media?.gif?.previewUrl?.toString()}',
+    );
+
+
+  });
+
+
 }
 
 class MyApp extends StatelessWidget {
@@ -30,6 +59,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  late final FhotoResult fhotoResult;
+  //late final String textInput = 'cat';
+
+  //var res = resFind('cat');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,33 +72,49 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.green,
         title: Text(widget.title),
       ),
-      body:  Padding(
-         padding: EdgeInsets.all(16.0),
-         child: Column(
+       body:
+       Column(
            children: [
-             Expanded(
-              child: TextField(
+              TextField(
                 enabled: true,
                 decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "Пошук картинок",
                ),
-                  onChanged: (text) {
-                    print("onChanged");
-                    print("Введенный текст: $text");
-                  },
+                onSubmitted: (text) {
+                  //print("onSubmtted");
+                  resFind('cat');
+
+
+                  print('Введенный текст: $text');
+
+                },
+                  // onChanged: (text) {
+                  //  // print("onChanged");
+                  //   autoSearch(text);
+                  //   print("Введенный текст: $text");
+                  // },
              ),
-        ),
-               const SizedBox(
-                 height: 70,
-                 child: Text(
-                     'Не знайдено жодної картинки',
-                    textAlign: TextAlign.center,
-                 ),
-               ),
-             ],
-         ),
-      ),
+
+               ListView.builder(
+                       itemCount: 3,
+                       itemBuilder: (context, index) {
+                      return  Image.network('https://img.freepik.com/free-vector/sticker-template-cat-cartoon-character_1308-68148.jpg?size=626&ext=jpg');
+
+                       }
+                   ),
+
+    ],
+    ),
+
     );
   }
+}
+
+class FhotoResult {
+  late String imageUrl;
+
+  FhotoResult({
+    required this.imageUrl
+});
 }
