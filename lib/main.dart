@@ -1,22 +1,23 @@
+//import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tenor/tenor.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-void main() {
+import 'card.dart';
+
+//import 'card.dart';
+
+void main() async {
+
   runApp(const MyApp());
 }
+
 const String apiKeyTenor = 'LIVDSRZULELA';
 Tenor tenor = Tenor(apiKey: apiKeyTenor);
-final List<String> _listOfCards = [];
-
-// Future autoSearch(String autoFind) async {
-//
-// // auto complete results
-//   List<String> autoCompleted = await tenor.autoComplete(autoFind, limit: 5);
-// }
+final List<SearchResult> _listOfCards = [];
 
 Future resFind(String find) async {
-  final FhotoResult fhotoResult;
-
 // search Gif
   TenorResponse? res = await tenor.searchGIF(find, limit: 5);
   res?.results.forEach((TenorResult tenorResult) {
@@ -24,13 +25,10 @@ Future resFind(String find) async {
     var media = tenorResult.media;
     print('$title: gif : ${media?.gif?.previewUrl?.toString()}');
 
-    _listOfCards.add('${media?.gif?.previewUrl?.toString()}',
+    _listOfCards.add(
+      '${media?.gif?.previewUrl?.toString()}' as SearchResult,
     );
-
-
   });
-
-
 }
 
 class MyApp extends StatelessWidget {
@@ -59,62 +57,91 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final dio = Dio();
 
-  late final FhotoResult fhotoResult;
-  //late final String textInput = 'cat';
 
-  //var res = resFind('cat');
 
   @override
   Widget build(BuildContext context) {
+    SearchResult? searchResult;
+    SearchResult? finishSearchResult;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
         title: Text(widget.title),
       ),
-       body:
-       Column(
-           children: [
-              TextField(
-                enabled: true,
-                decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: "Пошук картинок",
-               ),
-                onSubmitted: (text) {
-                  //print("onSubmtted");
-                  resFind('cat');
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TypeAheadField(
+              textFieldConfiguration: TextFieldConfiguration(
+                  autofocus: true,
+                  style: DefaultTextStyle.of(context).style.copyWith(
+                     // fontStyle: FontStyle.italic
+                  ),
 
+               // style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 0.5),
+                  decoration: const InputDecoration(
+                      hintText: 'Пошук картинок',
+                      helperText: 'Жодної картинки не знайдено',
+                      hintStyle: TextStyle(height: 0.5, fontSize:20),
+                      //DefaultTextStyle.of(context).style.apply(fontSizeFactor: 0.5),
+                      border: OutlineInputBorder()
 
-                  print('Введенный текст: $text');
+                  ),
+        //
+      ),
+                suggestionsCallback: (pattern) async {
+                final response = await dio.get(
+                    'https://g.tenor.com/v1/autocomplete?q=$pattern&key=LIVDSRZULELA');
+                final jsonResponse = response.data;
+                final results = jsonResponse['results'];
+                return List<String>.from(results);
+              },
+              itemBuilder: (context, suggestion) {
+                return ListTile(
+                  title: Text(suggestion),
+                );
+              },
+              onSuggestionSelected: (suggestion)  async {
+                //final SearchResult searchResult;
+                TenorResponse? res = await tenor.searchGIF(suggestion, limit: 1);
+                res?.results.forEach((TenorResult tenorResult) {
+                  var title = tenorResult.title;
+                  var media = tenorResult.media;
+                  var searchResult = media?.gif?.previewUrl?.toString();
+                  print('$title: gif : ${media?.gif?.previewUrl?.toString()}');
+                  print('РЕЗУЛЬТАТ : $searchResult');
+                  // _listOfCards.add(
+                  //     '${media?.gif?.previewUrl?.toString()}' as SearchResult);
+                });
+                // setState(() {
+                //   finishSearchResult = searchResult;
+                //       },
+                //     );
+                }
+                ),
 
-                },
-                  // onChanged: (text) {
-                  //  // print("onChanged");
-                  //   autoSearch(text);
-                  //   print("Введенный текст: $text");
-                  // },
-             ),
-
-               ListView.builder(
-                       itemCount: 3,
-                       itemBuilder: (context, index) {
-                      return  Image.network('https://img.freepik.com/free-vector/sticker-template-cat-cartoon-character_1308-68148.jpg?size=626&ext=jpg');
-
-                       }
-                   ),
-
-    ],
-    ),
-
-    );
-  }
+            const Expanded(
+              child: SizedBox(
+                height: 200.0,
+               child: CardGrid(),
+              ),
+            ),
+          ],
+        ),
+      );
+      }
 }
 
-class FhotoResult {
-  late String imageUrl;
+class SearchResult{
+  final String imageUrl;
 
-  FhotoResult({
-    required this.imageUrl
-});
+  SearchResult(
+  {this.imageUrl = 'https://encrypted-tbn0.gstatic.com/'
+  'images?q=tbn:ANd9GcTeZh64y1w9MZ0jQZVEM4ixQPH6d7RiuZaKMFrFYui9jQ&s'});
 }
+
+
+
+
