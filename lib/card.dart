@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 
 class CardGrid extends StatelessWidget {
-  //final SearchResult searchResult;
+  final List<SearchResult> searchResult;
 
   const CardGrid(
-      {super.key,
+      {super.key, required this.searchResult,
         });
 
   @override
@@ -17,9 +17,9 @@ class CardGrid extends StatelessWidget {
       removeTop: true,
       child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1,
+            crossAxisCount: 2,
           ),
-          itemCount: 15,
+          itemCount: searchResult.length,
           itemBuilder: (BuildContext context, int index) {
             return Card(
               //color: Colors.amber,
@@ -28,15 +28,19 @@ class CardGrid extends StatelessWidget {
                   child: Column(
                     children: [
                       Image.network(
-                          'https://encrypted-tbn0.gstatic.com/'
-                      'images?q=tbn:ANd9GcTeZh64y1w9MZ0jQZVEM4ixQPH6d7RiuZaKMFrFYui9jQ&s'),
+                          searchResult[index].imageUrl,
+                        width: double.infinity,
+                        height: 140,
+                          //fit:BoxFit.cover
+                      ),
+
                       Row(
                         children: [
                           ButtonBar(
                             children: [
                               SizedBox(
                                 width: 85.0,
-                                height: 50.0,
+                                height: 40.0,
                                 child: ElevatedButton.icon(
                                     // style: ElevatedButton.styleFrom(
                                     //     //primary: Colors.purple,
@@ -50,7 +54,7 @@ class CardGrid extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: 85.0,
-                                height: 50.0,
+                                height: 40.0,
                                 child: ElevatedButton.icon(
                                     // style: ElevatedButton.styleFrom(
                                     //   //primary: Colors.purple,

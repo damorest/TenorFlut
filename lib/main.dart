@@ -15,21 +15,7 @@ void main() async {
 
 const String apiKeyTenor = 'LIVDSRZULELA';
 Tenor tenor = Tenor(apiKey: apiKeyTenor);
-final List<SearchResult> _listOfCards = [];
-
-Future resFind(String find) async {
-// search Gif
-  TenorResponse? res = await tenor.searchGIF(find, limit: 5);
-  res?.results.forEach((TenorResult tenorResult) {
-    var title = tenorResult.title;
-    var media = tenorResult.media;
-    print('$title: gif : ${media?.gif?.previewUrl?.toString()}');
-
-    _listOfCards.add(
-      '${media?.gif?.previewUrl?.toString()}' as SearchResult,
-    );
-  });
-}
+List<SearchResult> _listOfCards = [];
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -83,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
                // style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 0.5),
                   decoration: const InputDecoration(
                       hintText: 'Пошук картинок',
-                      helperText: 'Жодної картинки не знайдено',
+                      //helperText: 'Жодної картинки не знайдено',
                       hintStyle: TextStyle(height: 0.5, fontSize:20),
                       //DefaultTextStyle.of(context).style.apply(fontSizeFactor: 0.5),
                       border: OutlineInputBorder()
@@ -105,31 +91,38 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               onSuggestionSelected: (suggestion)  async {
                 //final SearchResult searchResult;
-                TenorResponse? res = await tenor.searchGIF(suggestion, limit: 1);
+                TenorResponse? res = await tenor.searchGIF(suggestion, limit: 10);
+                List<SearchResult> newResult = [];
                 res?.results.forEach((TenorResult tenorResult) {
                   var title = tenorResult.title;
                   var media = tenorResult.media;
                   var searchResult = media?.gif?.previewUrl?.toString();
-                  print('$title: gif : ${media?.gif?.previewUrl?.toString()}');
-                  print('РЕЗУЛЬТАТ : $searchResult');
-                  // _listOfCards.add(
-                  //     '${media?.gif?.previewUrl?.toString()}' as SearchResult);
+
+                  newResult.add( SearchResult(imageUrl: searchResult ?? '') );
+
                 });
-                // setState(() {
-                //   finishSearchResult = searchResult;
-                //       },
-                //     );
+
+                setState(() {
+                  _listOfCards = newResult;
+                      },
+                    );
                 }
                 ),
+            SizedBox(
+            child: Text(_listOfCards.isNotEmpty?'':'Жодної картинки не знайдено'),
+            ),
 
-            const Expanded(
+            Expanded(
               child: SizedBox(
                 height: 200.0,
-               child: CardGrid(),
+               child: CardGrid(
+                    searchResult: _listOfCards,
               ),
             ),
+            ),
           ],
-        ),
+    )
+
       );
       }
 }
@@ -137,10 +130,11 @@ class _MyHomePageState extends State<MyHomePage> {
 class SearchResult{
   final String imageUrl;
 
-  SearchResult(
-  {this.imageUrl = 'https://encrypted-tbn0.gstatic.com/'
-  'images?q=tbn:ANd9GcTeZh64y1w9MZ0jQZVEM4ixQPH6d7RiuZaKMFrFYui9jQ&s'});
+  SearchResult({
+      required this.imageUrl,});
 }
+
+
 
 
 
