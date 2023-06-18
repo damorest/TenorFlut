@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
+import 'bigimage.dart';
 import 'main.dart';
 
 class CardGrid extends StatelessWidget {
@@ -31,7 +32,16 @@ class CardGrid extends StatelessWidget {
                   child: Column(
                     children: [
                   GestureDetector(
-                    onTap: onTap,
+                    onTap:() {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => AboutPage(searchResult: searchResult[index],
+                    ),
+                  ),
+                    );
+                    },
+
                         child: Image.network(
                             searchResult[index].imageUrl,
                           width: double.infinity,
@@ -48,13 +58,7 @@ class CardGrid extends StatelessWidget {
                                 width: 85.0,
                                 height: 40.0,
                                 child: ElevatedButton.icon(
-                                    // style: ElevatedButton.styleFrom(
-                                    //     //primary: Colors.purple,
-                                    //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                    //     textStyle: const TextStyle(
-                                    //         fontSize: 5,)),
-                                    // fontWeight: FontWeight.bold)),
-                                    onPressed: () {
+                                      onPressed: () {
                                       Share.share( "Подивись, яку класну картинку я знайшов: ${searchResult[index].imageUrl} " ) ;
                                     },
                                     icon: const Icon(Icons.share),
@@ -64,12 +68,6 @@ class CardGrid extends StatelessWidget {
                                 width: 85.0,
                                 height: 40.0,
                                 child: ElevatedButton.icon(
-                                    // style: ElevatedButton.styleFrom(
-                                    //   //primary: Colors.purple,
-                                    //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                    //     textStyle: const TextStyle(
-                                    //         fontSize: 5,)),
-                                    //         //fontWeight: FontWeight.bold)),
                                     onPressed: () {},
                                     icon: const Icon(Icons.star),
                                     label: const Text('')),
@@ -86,8 +84,12 @@ class CardGrid extends StatelessWidget {
           }),
     );
   }
+
 }
 void sharePressed(String mesage) {
   String mesage = '';
   Share.share(mesage);
 }
+
+
+

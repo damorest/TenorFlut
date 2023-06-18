@@ -117,15 +117,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 200.0,
                child: CardGrid(
                     searchResult: _listOfCards,
-                 onTap: () async{
-                   final newCardInfo = await Navigator.push<SearchResult>(
-                       context,
-                       MaterialPageRoute(
-                           builder: (_) => AboutPage(searchResult: _listOfCards.first,
-                           )
-                       )
-                   );
-                   },
+                  onTap: () {}
+                   //   async{
+                   // final newCardInfo = await Navigator.push<SearchResult>(
+                   //     context,
+                   //     MaterialPageRoute(
+                   //         builder: (_) => AboutPage(searchResult: _listOfCards,
+                   //         )
+                   //     )
+                   // );
+                   // },
               ),
             ),
             ),
