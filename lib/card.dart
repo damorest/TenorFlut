@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'main.dart';
 
 class CardGrid extends StatelessWidget {
   final List<SearchResult> searchResult;
+  final VoidCallback onTap;
 
   const CardGrid(
       {super.key, required this.searchResult,
+        required this.onTap,
         });
 
   @override
@@ -27,11 +30,14 @@ class CardGrid extends StatelessWidget {
                 child: Container(
                   child: Column(
                     children: [
-                      Image.network(
-                          searchResult[index].imageUrl,
-                        width: double.infinity,
-                        height: 140,
-                          //fit:BoxFit.cover
+                  GestureDetector(
+                    onTap: onTap,
+                        child: Image.network(
+                            searchResult[index].imageUrl,
+                          width: double.infinity,
+                          height: 140,
+                            //fit:BoxFit.cover
+                        ),
                       ),
 
                       Row(
@@ -48,7 +54,9 @@ class CardGrid extends StatelessWidget {
                                     //     textStyle: const TextStyle(
                                     //         fontSize: 5,)),
                                     // fontWeight: FontWeight.bold)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Share.share( "Подивись, яку класну картинку я знайшов: ${searchResult[index].imageUrl} " ) ;
+                                    },
                                     icon: const Icon(Icons.share),
                                     label: const Text('')),
                               ),
@@ -78,4 +86,8 @@ class CardGrid extends StatelessWidget {
           }),
     );
   }
+}
+void sharePressed(String mesage) {
+  String mesage = '';
+  Share.share(mesage);
 }

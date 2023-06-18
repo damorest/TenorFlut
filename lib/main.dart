@@ -1,12 +1,12 @@
-//import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:tenor/tenor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-
+import 'bigimage.dart';
 import 'card.dart';
 
-//import 'card.dart';
+
 
 void main() async {
 
@@ -117,6 +117,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 200.0,
                child: CardGrid(
                     searchResult: _listOfCards,
+                 onTap: () async{
+                   final newCardInfo = await Navigator.push<SearchResult>(
+                       context,
+                       MaterialPageRoute(
+                           builder: (_) => AboutPage(searchResult: _listOfCards.first,
+                           )
+                       )
+                   );
+                   },
               ),
             ),
             ),
