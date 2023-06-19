@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>129399153883-pteaf5ij0g4d6n4cl9oi5aduts54rab8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.129399153883-pteaf5ij0g4d6n4cl9oi5aduts54rab8</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDwAUWz5_3ldHMr1e1Bond0WktjjPWNuyc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>129399153883</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.tenorhome</string>
+	<key>PROJECT_ID</key>
+	<string>flutten-1686495920065</string>
+	<key>STORAGE_BUCKET</key>
+	<string>flutten-1686495920065.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:129399153883:ios:c89292035f6294c1fad8fe</string>
+</dict>
+</plist>

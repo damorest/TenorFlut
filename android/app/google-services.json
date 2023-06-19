@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "129399153883",
+    "project_id": "flutten-1686495920065",
+    "storage_bucket": "flutten-1686495920065.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129399153883:android:30b1e8d293fb1fc0fad8fe",
+        "android_client_info": {
+          "package_name": "com.example.tenor_home"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "129399153883-lkl80lvp37i1q7onrnvhoskvaci2emu5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSub4lN0POXKoY0b1jCgNkqocO2QlprjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "129399153883-lkl80lvp37i1q7onrnvhoskvaci2emu5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
