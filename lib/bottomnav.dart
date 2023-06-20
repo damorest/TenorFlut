@@ -5,13 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
 class StarData extends StatelessWidget {
- // final CardInfo cardInfo;
-  //final VoidCallback onTap;
 
   const StarData({
     Key? key,
-   // required this.cardInfo,
-   // required this.onTap
+
   }) : super(key: key);
 
 
@@ -64,7 +61,7 @@ class StarData extends StatelessWidget {
                               height: 40.0,
                               child: ElevatedButton.icon(
                                   onPressed: () {
-                                   // FirebaseFirestore.instance.collection('favorites').add({'item': searchResult[index].imageUrl});
+                                    FirebaseFirestore.instance.collection('favorites').doc(snapshot.data!.docs[index].id).delete();
                                   },
                                   icon: const Icon(Icons.delete_sweep),
                                   label: const Text('')),
@@ -85,6 +82,32 @@ class StarData extends StatelessWidget {
         );
       }
     ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Головна',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star),
+            label: 'Улюблене',
+          ),
+
+        ],
+        // currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: (index) {
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (BuildContext context) => StarData(),
+          //   ),
+          // );
+
+          print('index : $index');
+
+        },
+      ),
     );
       
   }
