@@ -51,10 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
   }
-  // void _onItemTapped(int index) {
-  //   setState(() {
-  //     _selectedIndex = index;
-  //   });
+
 
 
   @override
@@ -156,20 +153,19 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Налаштування',
           ),
         ],
-        // currentIndex: _selectedIndex,
+         currentIndex: 0,
         selectedItemColor: Colors.amber[800],
         onTap: (index) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) => StarData(),
+          if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => StarData(),
               ),
             );
-
-          print('index : $index');
-
+          }
         },
-      ),
+          ),
     );
 
 

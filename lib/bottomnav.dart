@@ -94,22 +94,14 @@ class StarData extends StatelessWidget {
           ),
 
         ],
-        // currentIndex: _selectedIndex,
+        currentIndex: 1,
         selectedItemColor: Colors.amber[800],
         onTap: (index) {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (BuildContext context) => StarData(),
-          //   ),
-          // );
-
-          print('index : $index');
-
-        },
+          Navigator.of(context).pop();
+          },
       ),
     );
-      
+
   }
 
 }
