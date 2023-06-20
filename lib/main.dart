@@ -5,6 +5,7 @@ import 'package:tenor/tenor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'bigimage.dart';
+import 'bottomnav.dart';
 import 'card.dart';
 
 
@@ -50,7 +51,10 @@ class _MyHomePageState extends State<MyHomePage> {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
   }
-
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //   });
 
 
   @override
@@ -58,6 +62,10 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   initFirebase();
   }
+
+  @override
+
+
 
   Widget build(BuildContext context) {
     SearchResult? searchResult;
@@ -132,11 +140,42 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ),
           ],
-    )
+    ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Головна',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star),
+            label: 'Улюблене',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Налаштування',
+          ),
+        ],
+        // currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: (index) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => StarData(),
+              ),
+            );
 
-      );
+          print('index : $index');
+
+        },
+      ),
+    );
+
+
       }
 }
+
 
 class SearchResult{
   final String imageUrl;
