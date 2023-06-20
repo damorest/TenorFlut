@@ -1,4 +1,5 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tenor/tenor.dart';
 import 'package:dio/dio.dart';
@@ -45,9 +46,19 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final dio = Dio();
 
+  void initFirebase() async{
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+  }
+
 
 
   @override
+  void initState() {
+    super.initState();
+  initFirebase();
+  }
+
   Widget build(BuildContext context) {
     SearchResult? searchResult;
     SearchResult? finishSearchResult;
@@ -90,7 +101,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
               onSuggestionSelected: (suggestion)  async {
-                //final SearchResult searchResult;
                 TenorResponse? res = await tenor.searchGIF(suggestion, limit: 10);
                 List<SearchResult> newResult = [];
                 res?.results.forEach((TenorResult tenorResult) {
@@ -118,16 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                child: CardGrid(
                     searchResult: _listOfCards,
                   onTap: () {}
-                   //   async{
-                   // final newCardInfo = await Navigator.push<SearchResult>(
-                   //     context,
-                   //     MaterialPageRoute(
-                   //         builder: (_) => AboutPage(searchResult: _listOfCards,
-                   //         )
-                   //     )
-                   // );
-                   // },
-              ),
+               ),
             ),
             ),
           ],
